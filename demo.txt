@@ -1,0 +1,291 @@
+import 'package:chewie/chewie.dart';
+import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
+
+class Topbarcontent extends StatefulWidget {
+  const Topbarcontent({super.key});
+
+  @override
+  State<Topbarcontent> createState() => _TopbarcontentState();
+}
+
+class _TopbarcontentState extends State<Topbarcontent> {
+  final VideoPlayerController videoPlayerController =
+      VideoPlayerController.asset("assets/video.mp4");
+  ChewieController? chewieController;
+
+  @override
+  void initState() {
+    chewieController =
+        ChewieController(
+          videoPlayerController: videoPlayerController,
+          autoPlay: true,
+          looping: true,
+          autoInitialize: true,
+          showControls: false,
+          
+          );
+    super.initState();
+  }
+
+  @override
+void dispose() {
+  videoPlayerController.dispose();
+  chewieController!.dispose();
+  super.dispose();
+}
+
+  bool isMouseOver = false;
+  String hoveredText = ""; // Store the currently hovered text
+  bool isDropdownVisible = false; // Track dropdown visibility
+
+  // Map for dropdown content
+  final Map<String, List<String>> dropdownData = {
+    "BIR-BILLING⮟": [
+      "Classic Paragliding",
+      "Prime Paragliding",
+      "XC Paragliding",
+      "Paragliding for Seniors"
+    ],
+    "KULLU MANALI⮟": [
+      "Snow Trekking",
+      "Manali Day Tour",
+      "Skiing Adventures",
+    ],
+    "DHARAMSHALA⮟": [
+      "Tea Plantation Tour",
+      "Monastery Visits",
+      "Local Handicrafts"
+    ],
+  };
+
+  // Function to show dropdown content
+  Widget buildDropdown(String text) {
+    if (!dropdownData.containsKey(text)) return const SizedBox.shrink();
+
+    return Container(
+      width: 300,
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: dropdownData[text]!
+            .map((item) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    item,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ))
+            .toList(),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+
+    return Stack(
+      children: [
+        Container(
+          // color: Colors.red,
+          width: screenSize.width,
+          height: screenSize.height,
+          child: VideoPlayerPopup(videoUrl: 'assets/video.mp4',)),
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image with increased size
+              SizedBox(
+                width: 300,
+                child: Image.asset(
+                  "assets/parabooking.png",
+                ),
+              ),
+              SizedBox(
+                width: 800,
+                height: 600,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (var text in [
+                      "BIR-BILLING⮟",
+                      "KULLU MANALI⮟",
+                      "SHIMLA",
+                      "DHARAMSHALA⮟",
+                      "BLOG"
+                    ])
+                      MouseRegion(
+                        onHover: (_) {
+                          setState(() {
+                            hoveredText = text;
+                            isDropdownVisible = dropdownData.containsKey(text);
+                          });
+                        },
+                        onExit: (_) {
+                          setState(() {
+                            isDropdownVisible = false;
+                          });
+                        },
+                        child: Text(
+                          text,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: hoveredText == text
+                                ? FontWeight.bold
+                                : FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    // Custom item with prefix icon
+                    MouseRegion(
+                      onHover: (_) {
+                        setState(() {
+                          hoveredText = "UPDATE";
+                        });
+                      },
+                      onExit: (_) {
+                        setState(() {
+                          hoveredText = "";
+                        });
+                      },
+                      child: Row(
+                        children: [
+                           Transform.scale(
+                            scale: hoveredText == "UPDATE" ? 1.02 : 1.0, // Slight scaling effect
+                            child: Icon(
+                              Icons.info,
+                              size: 22,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            "UPDATE",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: hoveredText == "UPDATE"
+                                  ? FontWeight.bold
+                                  : FontWeight.w400,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 60,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    MouseRegion(
+                      onHover: (_) {
+                        setState(() {
+                          hoveredText = "LOGIN";
+                        });
+                      },
+                      onExit: (_) {
+                        setState(() {
+                          hoveredText = "";
+                        });
+                      },
+                      child: Text(
+                        "LOGIN",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: hoveredText == "LOGIN"
+                              ? FontWeight.bold
+                              : FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        // Dropdown visibility logic
+        // if (isDropdownVisible && dropdownData.containsKey(hoveredText))
+        //   Positioned(
+        //     top: 50, // Adjust as needed
+        //     left: screenSize.width * 0.3, // Adjust position based on UI
+        //     child: buildDropdown(hoveredText),
+        //   ),
+      ],
+    );
+  }
+}
+
+
+class VideoPlayerPopup extends StatefulWidget {
+  final String videoUrl;
+
+  const VideoPlayerPopup({super.key, required this.videoUrl});
+  @override
+  _VideoPlayerPopupState createState() => _VideoPlayerPopupState();
+}
+
+class _VideoPlayerPopupState extends State<VideoPlayerPopup> {
+  late VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset(widget.videoUrl,
+        videoPlayerOptions: VideoPlayerOptions(
+            webOptions: VideoPlayerWebOptions(
+                controls: VideoPlayerWebOptionsControls.enabled(
+                    allowFullscreen: true, allowPlaybackRate: true))))
+      ..initialize().then((_) {
+        setState(() {}); // Ensure the video is displayed once initialized
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: _controller.value.isInitialized
+          ? Container(
+              height: double.infinity,
+              width: double.infinity,
+              child: VideoPlayer(_controller),
+            )
+          : const Center(
+              child: CircularProgressIndicator(
+              color: Colors.blue,
+              strokeWidth: .8,
+            )),
+    );
+  }
+}
