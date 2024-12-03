@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'clickablerows.dart';
+
 class Topbarcontent extends StatefulWidget {
   const Topbarcontent({super.key});
 
@@ -12,8 +13,7 @@ class Topbarcontent extends StatefulWidget {
 class _TopbarcontentState extends State<Topbarcontent> {
   late VideoPlayerController _controller;
   Color backgroundColor = Colors.transparent;
-
-
+  bool ishoverd = false;
   String? hoveredText; // Track currently hovered text
 
   @override
@@ -36,7 +36,6 @@ class _TopbarcontentState extends State<Topbarcontent> {
     _controller.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +73,8 @@ class _TopbarcontentState extends State<Topbarcontent> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [              Padding(
+              children: [
+                Padding(
                   padding: deviceType == DeviceScreenType.mobile
                       ? EdgeInsets.only(top: 100, bottom: 10)
                       : EdgeInsets.all(0),
@@ -106,31 +106,49 @@ class _TopbarcontentState extends State<Topbarcontent> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        // Toggle background color on click
-                        backgroundColor = backgroundColor == Colors.transparent
-                            ? Colors.blue
-                            : Colors.transparent;
-                      });
-                    },
-                    child: Container(
-                      width: 200,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: backgroundColor, // Dynamic background color
-                        shape: BoxShape
-                            .circle, // Ensure the background is a perfect circle
-                        image: DecorationImage(
-                          image: AssetImage(
-                              'assets/open.png'), // Path to your image
-                          fit: BoxFit
-                              .cover, // Fit the image within the circular container
+                Container(
+                  width: 200,
+                  height: 150,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: MouseRegion(
+                          onEnter: (event) {
+                            setState(() {
+                              ishoverd = true;
+                            });
+                          },
+                          onExit: (event) {
+                            setState(() {
+                              ishoverd = false;
+                            });
+                          },
+                          child: AnimatedContainer(
+                            height: 90,
+                            width: 90,
+                            duration: Duration(milliseconds: 400),
+                            decoration: BoxDecoration(
+                              color: ishoverd
+                                  ? Colors.blue
+                                  : Colors.white10, // Change background color
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Center(
+                              child: FittedBox(
+                                // Ensures the icon scales to fit within the container
+                                child: Icon(
+                                  Icons.play_circle_outline,
+                                  size:
+                                      90, // Match the size of the AnimatedContainer
+                                  color: Colors.white, // Set the icon color
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 SizedBox(
