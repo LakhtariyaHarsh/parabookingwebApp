@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:parabooking_webapp/classicbookparaglading.dart';
 import 'package:parabooking_webapp/crosscountry.dart';
@@ -6,8 +5,12 @@ import 'package:parabooking_webapp/dharmshalaparagliding.dart';
 import 'package:parabooking_webapp/kullumanaliparagrlliding.dart';
 import 'package:parabooking_webapp/primeparagliding.dart';
 import 'package:parabooking_webapp/shimalaparagliding.dart';
-import 'topbar/topbarcontent.dart';
+import 'package:parabooking_webapp/footer.dart' as footer;
+import 'package:parabooking_webapp/topbar/customappbar.dart';
+import 'package:parabooking_webapp/topbar/topbarcontent.dart' as topbar;
+
 import 'chooseflight.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -42,9 +45,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var Screensize = MediaQuery.of(context).size;
-    // var deviceType = getDeviceType(Screensize);
+    var deviceType = topbar.getDeviceType(Screensize);
     return Scaffold(
         backgroundColor: Colors.black,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(90.0), // Adjust the height as needed
+          child: CustomAppBar(), // Use your CustomAppBar widget here
+        ),
         body: SingleChildScrollView(
           padding: EdgeInsets.zero,
           child: Column(
@@ -52,11 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(
                 height: Screensize.height,
                 width: Screensize.width,
-                child: Topbarcontent(),
+                child: topbar.Topbarcontent(),
               ),
               Container(
                 color: Color(0xff2377af),
-                height: 380,
+                height:
+                    deviceType == topbar.DeviceScreenType.mobile ? 500 : 380,
                 width: Screensize.width,
                 child: Chooseflight(),
               ),
@@ -65,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: Screensize.width,
                 child: Classicbookparaglading(),
               ),
-               Container(
+              Container(
                 height: 630,
                 width: Screensize.width,
                 child: Primeparagliding(),
@@ -75,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: Screensize.width,
                 child: Crosscountry(),
               ),
-               Container(
+              Container(
                 height: 630,
                 width: Screensize.width,
                 child: Kullumanaliparagrlliding(),
@@ -85,10 +93,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: Screensize.width,
                 child: Dharmshalaparagliding(),
               ),
-               Container(
+              Container(
                 height: 630,
                 width: Screensize.width,
                 child: Shimalaparagliding(),
+              ),
+              Container(
+                height:
+                    deviceType == topbar.DeviceScreenType.mobile ? 1300 : 630,
+                color: Color(0xff767676),
+                width: Screensize.width,
+                child: footer.Footer(),
               ),
             ],
           ),

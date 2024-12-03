@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parabooking_webapp/topbar/clickablerows.dart';
 import 'topbar/topbarcontent.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -73,6 +74,8 @@ class _ChooseflightState extends State<Chooseflight> {
             textAlign: TextAlign.center,
           ),
         ),
+        if (deviceType == DeviceScreenType.mobile)
+          ClickableRows(),
         InkWell(
           onTap: (){
             print("object");
