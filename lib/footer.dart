@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'socialicon.dart';
 
 class Footer extends StatefulWidget {
   const Footer({super.key});
@@ -9,6 +11,7 @@ class Footer extends StatefulWidget {
 }
 
 class _FooterState extends State<Footer> {
+  bool ishoverd = false;
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -22,7 +25,7 @@ class _FooterState extends State<Footer> {
       padding: const EdgeInsets.all(25.0),
       child: isMobile
           ? SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -466,6 +469,23 @@ class _FooterState extends State<Footer> {
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 400,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Socialicon(icon: FontAwesomeIcons.facebook, color: const Color.fromARGB(255, 30, 60, 111)),
+                  Socialicon(icon: FontAwesomeIcons.twitter, color:  Colors.blue),
+                  Socialicon(icon: FontAwesomeIcons.instagram, color:  const Color.fromARGB(255, 236, 103, 185)),
+                  Socialicon(icon: FontAwesomeIcons.youtube, color:   Colors.red),
+                  Socialicon(icon: FontAwesomeIcons.linkedin, color:   Colors.blue),
+                  Socialicon(icon: FontAwesomeIcons.pinterest, color:   Colors.red),
+                  Socialicon(icon: FontAwesomeIcons.mailchimp , color:   Colors.black),
+                  Socialicon(icon: FontAwesomeIcons.whatsapp, color:   Colors.green),
+                ],
+              ),
             ),
           ],
         ),

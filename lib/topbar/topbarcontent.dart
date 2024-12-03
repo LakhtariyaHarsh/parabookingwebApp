@@ -109,46 +109,43 @@ class _TopbarcontentState extends State<Topbarcontent> {
                 Container(
                   width: 200,
                   height: 150,
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: MouseRegion(
-                          onEnter: (event) {
-                            setState(() {
-                              ishoverd = true;
-                            });
-                          },
-                          onExit: (event) {
-                            setState(() {
-                              ishoverd = false;
-                            });
-                          },
-                          child: AnimatedContainer(
-                            height: 90,
-                            width: 90,
-                            duration: Duration(milliseconds: 400),
-                            decoration: BoxDecoration(
-                              color: ishoverd
-                                  ? Colors.blue
-                                  : Colors.white10, // Change background color
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: Center(
-                              child: FittedBox(
-                                // Ensures the icon scales to fit within the container
-                                child: Icon(
-                                  Icons.play_circle_outline,
-                                  size:
-                                      90, // Match the size of the AnimatedContainer
-                                  color: Colors.white, // Set the icon color
-                                ),
-                              ),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: MouseRegion(
+                      onEnter: (event) {
+                        setState(() {
+                          ishoverd = true;
+                        });
+                      },
+                      onExit: (event) {
+                        setState(() {
+                          ishoverd = false;
+                        });
+                      },
+                      child: AnimatedContainer(
+                        height: 90,
+                        width: 90,
+                        duration: Duration(milliseconds: 400),
+                        decoration: BoxDecoration(
+                          color: ishoverd
+                              ? Colors.blue
+                              : Colors.white24, // Change background color
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Center(
+                          // Ensures the child is aligned at the center
+                          child: FittedBox(
+                            fit: BoxFit
+                                .contain, // Scales the icon proportionally to fit the container
+                            child: Icon(
+                              Icons.play_circle_outline,
+                              size: 90, // Size matching the container
+                              color: Colors.white, // Icon color
                             ),
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
                 SizedBox(
