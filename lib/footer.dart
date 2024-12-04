@@ -23,7 +23,7 @@ class _FooterState extends State<Footer> {
 
     return Padding(
       padding: const EdgeInsets.all(25.0),
-      child: isMobile
+      child: (isMobile || isTablet)
           ? SingleChildScrollView(
               physics: NeverScrollableScrollPhysics(),
               child: Column(
@@ -473,17 +473,27 @@ class _FooterState extends State<Footer> {
             const SizedBox(height: 20),
             SizedBox(
               width: 400,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Wrap(
+                spacing: 10, // Horizontal spacing between buttons
+                runSpacing: 10,
                 children: [
-                  Socialicon(icon: FontAwesomeIcons.facebook, color: const Color.fromARGB(255, 30, 60, 111)),
-                  Socialicon(icon: FontAwesomeIcons.twitter, color:  Colors.blue),
-                  Socialicon(icon: FontAwesomeIcons.instagram, color:  const Color.fromARGB(255, 236, 103, 185)),
-                  Socialicon(icon: FontAwesomeIcons.youtube, color:   Colors.red),
-                  Socialicon(icon: FontAwesomeIcons.linkedin, color:   Colors.blue),
-                  Socialicon(icon: FontAwesomeIcons.pinterest, color:   Colors.red),
-                  Socialicon(icon: FontAwesomeIcons.mailchimp , color:   Colors.black),
-                  Socialicon(icon: FontAwesomeIcons.whatsapp, color:   Colors.green),
+                  Socialicon(
+                      icon: FontAwesomeIcons.facebook,
+                      color: const Color.fromARGB(255, 30, 60, 111)),
+                  Socialicon(
+                      icon: FontAwesomeIcons.twitter, color: Colors.blue),
+                  Socialicon(
+                      icon: FontAwesomeIcons.instagram,
+                      color: const Color.fromARGB(255, 236, 103, 185)),
+                  Socialicon(icon: FontAwesomeIcons.youtube, color: Colors.red),
+                  Socialicon(
+                      icon: FontAwesomeIcons.linkedin, color: Colors.blue),
+                  Socialicon(
+                      icon: FontAwesomeIcons.pinterest, color: Colors.red),
+                  Socialicon(
+                      icon: FontAwesomeIcons.mailchimp, color: Colors.black),
+                  Socialicon(
+                      icon: FontAwesomeIcons.whatsapp, color: Colors.green),
                 ],
               ),
             ),

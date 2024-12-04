@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 height:
-                    deviceType == topbar.DeviceScreenType.mobile ? 1300 : 630,
+                    deviceType == topbar.DeviceScreenType.desktop ? 630 : 1350,
                 color: Color(0xff767676),
                 width: Screensize.width,
                 child: footer.Footer(),

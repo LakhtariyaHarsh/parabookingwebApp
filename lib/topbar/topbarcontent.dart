@@ -164,11 +164,11 @@ class _TopbarcontentState extends State<Topbarcontent> {
 enum DeviceScreenType { mobile, tablet, desktop }
 
 DeviceScreenType getDeviceType(Size size) {
-  if (size.width > 950) {
-    return DeviceScreenType.desktop;
-  } else if (size.width > 600) {
+  if (size.width < 600) {
+    return DeviceScreenType.mobile;
+  } else if (size.width < 1200) {
     return DeviceScreenType.tablet;
   } else {
-    return DeviceScreenType.mobile;
+    return DeviceScreenType.desktop;
   }
 }

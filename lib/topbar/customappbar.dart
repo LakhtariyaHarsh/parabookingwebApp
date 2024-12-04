@@ -141,7 +141,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 flex: 3,
                 child: Image.asset(
                   "assets/parabooking.png",
-                  height: deviceType == footer.DeviceScreenType.mobile ? 50 : 80,
+                  height: deviceType == footer.DeviceScreenType.mobile ? 40 : 80,
                   color: Color(0xff2377af),
                 ),
               ),
